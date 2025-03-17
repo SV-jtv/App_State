@@ -18,7 +18,6 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -44,14 +43,14 @@ fun CalculaPropina(modifier: Modifier = Modifier) {
     {
         // Write your code here
 
-        // Espai entre els textos
-        Spacer(modifier = Modifier.height(20.dp))
+        // Espai principal
+        Spacer(modifier = Modifier.height(30.dp).fillMaxWidth().background(color = teal_700))
 
         // Bloc on va la imatge i el títol de l'app
         Row(
             modifier = modifier
                 .fillMaxWidth()
-                .background(color = Purple40),
+                .background(color = teal_700),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
@@ -68,6 +67,9 @@ fun CalculaPropina(modifier: Modifier = Modifier) {
                 modifier = Modifier.padding(start = 24.dp)
             )
         }
+        // Espai
+        Spacer(modifier = Modifier.height(5.dp).fillMaxWidth().background(color = teal_700))
+
         // Cos de l'app
         Column(
             modifier = Modifier
@@ -76,56 +78,112 @@ fun CalculaPropina(modifier: Modifier = Modifier) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ){
+
+            // Espai entre els textos
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(color = Color.White),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                // Write your code here
+
+                // Títol de l'exercici
+                Text(
+                    text = "EXERCICI 1",
+                    fontSize = 24.sp,
+                    modifier = modifier
+                )
+            }
             // Write your code here
 
-            // Títol de l'exercici
-            Text(
-                text = "EXERCICI PARELL O SENAR",
-                fontSize = 24.sp,
-                modifier = modifier
-            )
             // Espai entre els textos
             Spacer(modifier = Modifier.height(20.dp))
+
             // text esplicatiu
             Text(
-                text = "Si us plau, introdueix un número per comprovar si és parell o senar.",
+                text = "Menú.",
                 modifier = modifier.padding(start = 10.dp)
             )
+
             // Espai entre els textos
-            Spacer(modifier = Modifier.height(20.dp))
-            // Text pel missatge (EVEN - ODD)
-            var message by rememberSaveable { mutableStateOf("") }
+            Spacer(modifier = Modifier.height(5.dp))
+
+            // Quadre de text per introduir el número
+            var menu by rememberSaveable { mutableStateOf("") }
+            TextField(
+                value = menu,
+                onValueChange = { menu = it },
+                label = { Text(text = "Introdueix el preu del menú") },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+            )
+
+            // Espai entre els textos
+            Spacer(modifier = Modifier.height(10.dp))
+
+            // text esplicatiu
             Text(
-                text = message,
+                text = "Propina",
+                modifier = modifier.padding(start = 10.dp),
+            )
+
+            // Espai entre els textos
+            Spacer(modifier = Modifier.height(5.dp))
+
+            // Quadre de text per introduir el número
+            var propina by rememberSaveable { mutableStateOf("") }
+            TextField(
+                value = propina,
+                onValueChange = { propina = it },
+                label = { Text(text = "introdueix un percentatge de propina") },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+            )
+
+            // Text pel missatge del preu de la propina
+            var messagePropina by rememberSaveable { mutableStateOf("") }
+            Text(
+                text = messagePropina,
                 fontSize = 30.sp,
                 modifier = modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(start = 10.dp)
             )
-            // Quadre de text per introduir el número
-            var text by rememberSaveable { mutableStateOf("") }
-            TextField(
-                value = text,
-                onValueChange = { text = it },
+
+            // Text pel missatge del preu total
+            var messagePreu by rememberSaveable { mutableStateOf("") }
+            Text(
+                text = messagePreu,
+                fontSize = 30.sp,
+                modifier = modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(start = 10.dp)
             )
+
             // Botó per verifiar el número
             Button(modifier =Modifier,
                 colors = ButtonDefaults.buttonColors(
                     contentColor = Color.White,
-                    containerColor = limeGreen
+                    containerColor = teal_900
                 ), onClick = {
                     try {
-                        val num = parseInt(text)
-                        if (num < 0) {
+                        val preuMenu = parseInt(menu)
+                        val propina = parseInt(propina)
+
+                        val percentatge = propina + (1 * propina)/100
+
+
+                        if (preuMenu < 0) {
                             throw NumberFormatException()
                         }
-                        if ((num % 2) == 0) {
-                            message = "Even"
+                        if ((preuMenu % 2) == 0) {
+                            messagePreu = percentatge.toString()
                         } else {
-                            message = "Odd"
+                            messagePreu = "Odd"
                         }
                     } catch (e: NumberFormatException) {
-                        message = "String is not a number or is less than zero."
+                        messagePreu = "String is not a number or is less than zero."
                     }
                 }) {
                 Text(text = "Comprovar")
