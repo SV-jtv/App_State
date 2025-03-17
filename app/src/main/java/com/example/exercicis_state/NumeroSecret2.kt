@@ -1,6 +1,5 @@
 package com.example.exercicis_state
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,29 +9,28 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.exercicis_state.ui.theme.*
+import com.example.exercicis_state.ui.theme.teal_900
 import java.lang.Double.parseDouble
 import java.lang.Integer.parseInt
+import java.time.Year
+import kotlin.math.pow
 
 @Composable
-fun CalculaPropina(modifier: Modifier = Modifier) {
+fun NumeroSecret2(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .background(color = Color.White)
@@ -43,15 +41,18 @@ fun CalculaPropina(modifier: Modifier = Modifier) {
     )
     {
         // Write your code here
-        Cap("Calcula Propina")
+
+        Cap("Endevina el número secret")
+
         // Cos de l'app
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(color = Color.White),
             horizontalAlignment = Alignment.CenterHorizontally,
-            //verticalArrangement = Arrangement.Center
-        ){
+            verticalArrangement = Arrangement.Center
+        ) {
+            // Write your code here
 
             // Espai entre els textos
             Spacer(modifier = Modifier.height(10.dp))
@@ -59,62 +60,65 @@ fun CalculaPropina(modifier: Modifier = Modifier) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .padding(10.dp)
                     .background(color = Color.White),
-                horizontalArrangement = Arrangement.Start
+                horizontalArrangement = Arrangement.Start,
             ) {
                 // Write your code here
 
                 // Títol de l'exercici
                 Text(
-                    text = "EXERCICI 1",
+                    text = "EXERCICI 3",
                     fontSize = 24.sp,
                     modifier = modifier
                 )
             }
-            // Write your code here
+
 
             // Espai entre els textos
             Spacer(modifier = Modifier.height(20.dp))
 
-            val menu = title_InputNum("Menú", "Introdueix el preu del menú")
-            val propina = title_InputNum("Propina", "Introdueix un percentatge de propina")
+            var numSecret by rememberSaveable { mutableIntStateOf((0..100).random()) }
+            val num = title_InputNum("Numero", "Introdueix un numero")
+            var intents by rememberSaveable { mutableIntStateOf(0) }
+
 
             // Espai entre els textos
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
             // Text pel missatge del preu total
-            var messagePreu by rememberSaveable { mutableStateOf("") }
-            Message(messagePreu)
-
-            // Text pel missatge del preu de la propina
-            var messagePropina by rememberSaveable { mutableStateOf("") }
-            Message(messagePropina)
+            var messageNum by rememberSaveable { mutableStateOf("") }
+            Message(messageNum)
 
 
             // Botó per verifiar el número
-            Button(modifier =Modifier,
+            Button(
+                modifier = Modifier,
                 colors = ButtonDefaults.buttonColors(
                     contentColor = Color.White,
                     containerColor = teal_900
                 ), onClick = {
                     try {
-                        val preuMenu = parseInt(menu)
-                        val preuPropina = parseDouble(propina)
+                        val numm = parseInt(num)
+                        intents++
 
-                        val percentatge = (preuPropina/100) + 1
-                        val preuTotal = preuMenu * percentatge
-
-                        messagePreu = "Preu total: " + String.format("%.2f", preuTotal) + "€"
-                        messagePropina = "Valor de la propina: " + String.format("%.2f", (preuTotal - preuMenu)) + "€"
-
+                        messageNum = when {
+                            numm > numSecret -> "El número que busques és més petit"
+                            numm < numSecret -> "El número que busques és més gran"
+                            else -> {
+                                val resultat = "Has encertat en $intents intents! 🎉"
+                                numSecret = (0..100).random() // Reinicia el número secret
+                                intents = 0 // Reinicia el comptador
+                                resultat
+                            }
+                        }
                     } catch (e: NumberFormatException) {
-                        messagePreu = "Introdueix els dos valors"
+                        messageNum = "Introdueix un número vàlid"
                     }
-                }) {
-                Text(text = "Calcular")
+                }
+            ) {
+                Text(text = "Comprovar número")
             }
         }
-
     }
-
 }
