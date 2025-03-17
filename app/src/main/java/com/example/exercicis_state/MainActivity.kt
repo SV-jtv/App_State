@@ -37,6 +37,6 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     Exercicis_stateTheme {
-        Greeting("Android")
+        CalculaPropina(modifier = Modifier)
     }
 }

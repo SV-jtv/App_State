@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -35,13 +36,16 @@ fun CalculaPropina(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .background(color = Color.White)
-            .fillMaxWidth(),
+            .fillMaxSize(),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
 
     )
     {
         // Write your code here
+
+        // Espai entre els textos
+        Spacer(modifier = Modifier.height(20.dp))
 
         // Bloc on va la imatge i el títol de l'app
         Row(
