@@ -18,7 +18,7 @@ import androidx.compose.ui.res.painterResource
 import kotlin.random.Random
 
 @Composable
-fun Ex6() {
+fun LemonadeApp2() {
     var pasos by remember { mutableStateOf(1) }
     var numCliclsAleatori by remember { mutableStateOf(0) }
     var comptadorClicls by remember { mutableStateOf(0) }
