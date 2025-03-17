@@ -90,7 +90,6 @@ fun CalculaPropina(modifier: Modifier = Modifier) {
             var messagePropina by rememberSaveable { mutableStateOf("") }
             Message(messagePropina)
 
-
             // Botó per verifiar el número
             Button(modifier =Modifier,
                 colors = ButtonDefaults.buttonColors(
